@@ -1,0 +1,40 @@
+{
+    "todohighlight.keywords": [
+        "DEBUG:",
+        "REVIEW:",
+        {
+            "text": "NOTE:",
+            "color": "#ff0000",
+            "backgroundColor": "yellow",
+            "overviewRulerColor": "grey"
+        },
+        {
+            "text": "HACK:",
+            "color": "#000",
+            "isWholeLine": false,
+        },
+        {
+            "text": "* end of",
+            "color": "#cca",
+            "backgroundColor": "#000",
+        },
+        {
+            "text": "doc:",
+            "color": "#cca",
+            "backgroundColor": "#111",
+        },
+        {
+            "text": "TODO:",
+            "color": "red",
+            /**
+            * #NOTE:
+            * using borderRadius along with `border` 
+            *  or you will see nothing change 
+            */
+            "border": "1px solid red",
+            "borderRadius": "2px",
+            "backgroundColor": "rgba(0,0,0,.2)",
+            //other styling properties goes here ... 
+        }
+    ],
+}
