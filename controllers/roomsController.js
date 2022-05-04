@@ -22,6 +22,7 @@ const goRoomInfo = (e) => {
     const { room } = data;
     console.log(...room);
     printDetail(...room);
+
     rangePicker();
 
     if (data.booking) {

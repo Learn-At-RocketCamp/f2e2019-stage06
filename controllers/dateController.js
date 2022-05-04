@@ -2,6 +2,8 @@ import fecha from '../lib/fecha-4.2.1/lib/fecha.js';
 
 import HotelDatepicker from '../lib/hotel-datepicker-4.0.3/src/js/hotel-datepicker.js';
 
+import { printForm } from '../draft/devView.js';
+
 const { format } = fecha;
 
 // // Custom formats
@@ -58,6 +60,7 @@ const turnSelectedToArray = (pickString, nights) => {
   console.log(pickString.match(regexDate));
   console.log(regexDate.exec(pickString));
 
+  // #TODO: if(!pickString) return
   const { groups: regGroups } = regexDate.exec(pickString);
 
   const { pickedStart } = regGroups;
@@ -108,6 +111,8 @@ const turnSelectedToArray = (pickString, nights) => {
     });
   }
   console.table(pickedNights);
+
+  return { pickedNights, regGroups };
 };
 
 export const rangePicker = () => {
@@ -138,6 +143,7 @@ export const rangePicker = () => {
     },
     onSelectRange: function () {
       console.log('Date rage selected!!!');
+      // #NOTE:
       turnSelectedToArray(datepicker.getValue(), datepicker.getNights());
     },
     startDate: `${fecha.format(tomorrow, 'YYYY-MM-DD')}`,
@@ -157,11 +163,34 @@ export const rangePicker = () => {
   console.log(datepicker.getDatePicker());
   // datepicker.clear()
 
+  const btnBooking = document.querySelector('#js-btn-booking');
+
+  btnBooking.addEventListener(
+    'click',
+    () => {
+      console.log('Go to Form!!!');
+      datepicker.close();
+    },
+    'false'
+  );
+
   input.addEventListener(
     'afterClose',
     () => {
       console.log('Closed!');
-      console.log(datepicker.start);
+      console.log('date-start?:::', datepicker.start);
+
+      const id = btnBooking.dataset.id;
+      console.log('id:::', id);
+
+      const pickedData = turnSelectedToArray(
+        datepicker.getValue(),
+        datepicker.getNights()
+      );
+
+      console.log('pickedData:::', pickedData);
+
+      printForm({ id, pickedData });
     },
     false
   );

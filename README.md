@@ -20,6 +20,18 @@
 
 1. print detail with date range picker of click Room
 
+2. Event-"click"
+
+3. Go to its form with `{ id }` and `value`
+
+### Section3-Form
+
+1. print inputs form
+
+2. Event-"click"
+
+3. Post data
+
 ---
 
 ## init
