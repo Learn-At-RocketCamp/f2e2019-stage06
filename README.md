@@ -2,6 +2,26 @@
 
 ---
 
+## Functions
+
+### Section1-Home
+
+1. print title of Rooms
+
+  ```markdown
+   - bind with their `{ id }`
+  ```
+
+2. Event-"click"
+
+3. Go to their detail
+
+### Section2-Detail
+
+1. print detail with date range picker of click Room
+
+---
+
 ## init
 
   ```sh
@@ -20,7 +40,7 @@
 
 - new folder `<config>` with:
 
-  ```sh
+  ```markdown
    .
    ├─ <config>
    │  ├── config.env

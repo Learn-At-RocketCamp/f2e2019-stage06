@@ -1,5 +1,9 @@
 const tmpRoomDetail = (room) => {
   return `
+    <div class='card '>
+      <input id="input-id" type="text">
+    </div>
+
     <button class="btn btn-info my-3" id=""  data-id="${room.id}">
       Booking-${room.id}
     </button>

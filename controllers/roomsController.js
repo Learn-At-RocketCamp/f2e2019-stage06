@@ -1,5 +1,7 @@
 // import '../service/roomsHelper.js';
 import { getRooms, readOneRoom } from '../service/roomsHelper.js';
+import { rangePicker } from './dateController.js';
+
 import { printTitle, printDetail } from '../draft/devView.js';
 console.log('This is [roomsController.js]');
 
@@ -20,6 +22,7 @@ const goRoomInfo = (e) => {
     const { room } = data;
     console.log(...room);
     printDetail(...room);
+    rangePicker();
 
     if (data.booking) {
       const { booking } = data;
