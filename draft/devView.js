@@ -1,14 +1,19 @@
 const tmpForm = (tmpData) => {
   // #TODO: declutter
-  console.log('tmpData:::', tmpData);
-  console.table(tmpData);
-  const { pickedData } = tmpData;
-  const { regGroups } = pickedData;
-  const { pickedStart, pickedEnd } = regGroups;
+  // console.log('tmpData:::', tmpData);
+  // console.table(tmpData);
+  const { pickedData, datepicker } = tmpData;
+  const { pickedStart, pickedEnd } = pickedData;
 
-  console.log(pickedStart, pickedEnd);
+  console.log(pickedStart, pickedEnd, datepicker);
+  const formsDate = datepicker.getDatePicker();
+  console.log(formsDate);
 
   return `
+    <div class="card">
+      <input id="input-id" type="text">
+    </div>
+
     <div class="container my-5  ">
 
       <form action="" id="form-reservation"
@@ -56,7 +61,7 @@ const tmpForm = (tmpData) => {
               pattern="\d{4}-\d{2}-\d{2}">
 
             <span class=" validity"></span>
-          </label>
+          </label>          
 
           <!-- <input type="reset"> -->
         </div>
@@ -74,6 +79,12 @@ export const printForm = (tmpData, htmlContent = '') => {
   // htmlContent = roomsTitle.map(templateRoomTitle).join('');
   // document.querySelector('.room-detail').innerHTML = htmlContent;
   document.getElementById('res').innerHTML = tmpForm(tmpData);
+
+  const { datepicker } = tmpData;
+  datepicker.open();
+
+  // const formsDate = datepicker.getDatePicker();
+  // console.log(formsDate);
 };
 
 const tmpRoomDetail = (room) => {

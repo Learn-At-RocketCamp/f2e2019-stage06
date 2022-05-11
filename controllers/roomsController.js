@@ -5,6 +5,10 @@ import { rangePicker } from './dateController.js';
 import { printTitle, printDetail } from '../draft/devView.js';
 console.log('This is [roomsController.js]');
 
+const getPrice = ({ normalDayPrice, holidayPrice }) => {
+  return { normalDayPrice, holidayPrice };
+};
+
 const goRoomInfo = (e) => {
   if (!e.target.closest('li')) {
     return console.log('!');
@@ -14,16 +18,19 @@ const goRoomInfo = (e) => {
   console.log(id);
 
   // #TODO: chang fakeID to API
-  readOneRoom({ id }).then((data) => {
+  readOneRoom({ id }).then(({ data }) => {
     if (!data.success) {
       return console.log('!!');
     }
 
     const { room } = data;
     console.log(...room);
+
+    const { normalDayPrice, holidayPrice } = getPrice(...room);
+    console.log(normalDayPrice);
     printDetail(...room);
 
-    rangePicker();
+    rangePicker({ normalDayPrice, holidayPrice });
 
     if (data.booking) {
       const { booking } = data;
@@ -36,8 +43,8 @@ const goRoomInfo = (e) => {
 };
 
 const init = () => {
-  getRooms().then((data) => {
-    // console.log('finally-result:::', data);
+  getRooms().then(({ data }) => {
+    console.log('finally-result:::', data.items);
 
     const roomsTitle = Array.from(data.items, ({ name, id }) => {
       return { name, id };

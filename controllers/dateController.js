@@ -1,34 +1,12 @@
 import fecha from '../lib/fecha-4.2.1/lib/fecha.js';
-
 import HotelDatepicker from '../lib/hotel-datepicker-4.0.3/src/js/hotel-datepicker.js';
 
 import { printForm } from '../draft/devView.js';
 
-const { format } = fecha;
-
-// // Custom formats
-// // 'Friday November 20th, 2015'
-
-console.log(fecha.format(new Date(2015, 10, 20), 'd'));
-console.log(fecha.format(new Date(2015, 10, 20), 'isoDate'));
-console.log(format(new Date(2015, 10, 20), 'dddd MMMM Do, YYYY'));
-// // '1998-06-03 03:23:10.350 PM'
-// format(new Date(1998, 5, 3, 15, 23, 10, 350), 'YYYY-MM-DD hh:mm:ss.SSS A');
-// #XXX:
-const today = new Date();
-console.log('today:::', today);
-console.log('today-getDate:::', today.getDate());
-
-const tomorrow = new Date();
-tomorrow.setDate(tomorrow.getDate() + 1);
-console.log('tomorrow:::', tomorrow);
-
-const afterTomorrow = new Date();
-afterTomorrow.setDate(tomorrow.getDate() + 1);
-
-const after90Days = new Date();
-after90Days.setDate(today.getDate() + 90);
-console.log(after90Days);
+// Custom formats
+// console.log(fecha.format(new Date(2015, 10, 20), 'd'));
+// console.log(fecha.format(new Date(2015, 10, 20), 'isoDate'));
+// console.log(fecha.format(new Date(2015, 10, 20), 'dddd MMMM Do, YYYY'));
 
 const roomFillsDate = [
   '2022-05-09',
@@ -39,7 +17,28 @@ const roomFillsDate = [
   '2022-05-23',
 ];
 
-const selectDays = [];
+// #XXX: addDaysToDate(date, days)
+const today = new Date();
+// console.log('today:::', today);
+// console.log('today-getDate:::', today.getDate());
+
+const tomorrow = new Date();
+tomorrow.setDate(tomorrow.getDate() + 1);
+console.log('tomorrow:::', tomorrow);
+
+// const afterTomorrow = new Date();
+// afterTomorrow.setDate(tomorrow.getDate() + 1);
+
+const after90Days = new Date();
+after90Days.setDate(today.getDate() + 90);
+console.log(after90Days);
+
+const addDaysToDate = (date, days) => {
+  const res = new Date(date);
+  res.setDate(res.getDate() + days);
+  // #TODO: format
+  return res.toISOString();
+};
 
 const turnSelectedToArray = (pickString, nights) => {
   console.log('value:::', pickString);
@@ -56,40 +55,28 @@ const turnSelectedToArray = (pickString, nights) => {
    */
   const regexDate =
     /^(?<pickedStart>\d{4}-\d{2}-\d{2})(?<to>.-.)(?<pickedEnd>\d{4}-\d{2}-\d{2})$/u;
-
-  console.log(pickString.match(regexDate));
-  console.log(regexDate.exec(pickString));
+  // console.log(pickString.match(regexDate));
+  // console.log(regexDate.exec(pickString));
 
   // #TODO: if(!pickString) return
   const { groups: regGroups } = regexDate.exec(pickString);
 
-  const { pickedStart } = regGroups;
-  console.log(pickedStart);
+  const { pickedStart, pickedEnd } = regGroups;
+  // console.log(pickedStart);
 
   console.log('----------');
 
-  const pickedStartDate = new Date(pickedStart);
-  pickedStartDate.setDate(pickedStartDate.getDate() + nights);
-  console.log(pickedStartDate);
-  console.log(fecha.format(pickedStartDate, 'YYYY-MM-DD'));
-
-  const addDaysToDate = (date, days) => {
-    const res = new Date(date);
-    res.setDate(res.getDate() + days);
-    // #TODO: format
-    return res.toISOString();
-  };
+  // const pickedStartDate = new Date(pickedStart);
+  // pickedStartDate.setDate(pickedStartDate.getDate() + nights);
+  // console.log(pickedStartDate);
+  // console.log(fecha.format(pickedStartDate, 'YYYY-MM-DD'));
 
   const pickedNights = [];
-  // const tmpDate = new Date('2022-05-10');
   const tmpDate = new Date(pickedStart);
-  console.log(addDaysToDate(tmpDate, 1));
-
-  // const nights = 6;
+  // console.log(addDaysToDate(tmpDate, 1));
 
   for (let i = 0; i < nights; i++) {
-    console.log('!');
-    console.log(i);
+    // console.log(i);
 
     const tmpNight = new Date(addDaysToDate(tmpDate, i));
 
@@ -98,10 +85,11 @@ const turnSelectedToArray = (pickString, nights) => {
     const tmpNightEng = fecha.format(tmpNight, 'ddd');
 
     let isWeekend = true;
+
     if (tmpNightNumber > 0 && tmpNightNumber < 5) {
       isWeekend = false;
     }
-    console.log(isWeekend);
+    // console.log(isWeekend);
 
     pickedNights.push({
       date: tmpNightFormat,
@@ -112,16 +100,16 @@ const turnSelectedToArray = (pickString, nights) => {
   }
   console.table(pickedNights);
 
-  return { pickedNights, regGroups };
+  return { pickedNights, pickedStart, pickedEnd };
 };
 
-export const rangePicker = () => {
-  const input = document.getElementById('input-id');
+export const rangePicker = ({ normalDayPrice, holidayPrice }) => {
+  const input = document.querySelector('#input-id');
+
   /**
    * #NOTE: golden-rule of value
    * 'YYYY-MM-DD' - 'YYYY-MM-DD'
    */
-
   input.value = `
     ${fecha.format(tomorrow, 'YYYY-MM-DD')}
   `;
@@ -129,6 +117,8 @@ export const rangePicker = () => {
   //   ${fecha.format(tomorrow, 'YYYY-MM-DD')} - ${fecha.format(afterTomorrow, 'YYYY-MM-DD')}
   // `;
 
+  // #NOTE: onDayClick() ==> NG
+  // const selectDays = [];
   const datepicker = new HotelDatepicker(input, {
     // hoveringTooltip: function (nights, startTime, hoverTime) {
     //   // return nights;
@@ -144,7 +134,22 @@ export const rangePicker = () => {
     onSelectRange: function () {
       console.log('Date rage selected!!!');
       // #NOTE:
-      turnSelectedToArray(datepicker.getValue(), datepicker.getNights());
+      const pickedData = turnSelectedToArray(
+        datepicker.getValue(),
+        datepicker.getNights()
+      );
+      console.log(pickedData);
+      const { pickedNights } = pickedData;
+      const weekendNights = pickedNights.filter((item) => item.isWeekend);
+      console.log(weekendNights.length);
+      const normalNight = datepicker.getNights() - weekendNights.length;
+      const sumHoliday = Number(holidayPrice) * weekendNights.length;
+      const sumNormal = Number(normalDayPrice) * normalNight;
+      console.log('holidayPrice:::', holidayPrice);
+      console.log('normalDayPrice:::', normalDayPrice);
+      const payment = Number(sumHoliday + sumNormal);
+      console.log(payment);
+      document.querySelector('#payment').innerHTML = `帳單：${payment}`;
     },
     startDate: `${fecha.format(tomorrow, 'YYYY-MM-DD')}`,
     endDate: `${fecha.format(after90Days, 'YYYY-MM-DD')}`,
@@ -156,7 +161,7 @@ export const rangePicker = () => {
     showTopbar: false,
     // showTopbar: true,
   });
-  console.log(selectDays);
+  // console.log(selectDays);
 
   // datepicker.openDatepicker();
   datepicker.open();
@@ -188,13 +193,13 @@ export const rangePicker = () => {
         datepicker.getNights()
       );
 
-      console.log('pickedData:::', pickedData);
+      // console.log('pickedData:::', pickedData);
 
-      printForm({ id, pickedData });
+      printForm({ id, pickedData, datepicker });
     },
     false
   );
 
-  console.log(input.value);
-  console.log(datepicker);
+  // console.log(input.value);
+  // console.log(datepicker);
 };

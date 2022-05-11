@@ -32,19 +32,19 @@ console.log('This is [storeHelper.js].');
 
 export const getRooms = async () => {
   // #NOTE: res.data.items[] => { name, id }
-  const sample = await fetch('./draft/sample.json').catch((error) => {
-    return error;
-  });
-  const res = await sample.json().catch((error) => {
-    return error;
-  });
+  // const sample = await fetch('./draft/sample.json').catch((error) => {
+  //   return error;
+  // });
+  // const res = await sample.json().catch((error) => {
+  //   return error;
+  // });
   // console.log(data.items);
 
-  // const res = await apiRoomsGet().catch(
-  //   (err) =>
-  //     // console.error('await-catch:::', err);
-  //     err.response
-  // );
+  const res = await apiRoomsGet().catch(
+    (err) =>
+      // console.error('await-catch:::', err);
+      err.response
+  );
 
   return res;
 };
@@ -60,17 +60,17 @@ export const deleteRooms = async () => {
 
 export const readOneRoom = async ({ id }) => {
   // #NOTE: res.data.booking[] => { date }
-  const sampleOne = await fetch('./draft/sample-One.json').catch((error) => {
-    return error;
-  });
-  const res = await sampleOne.json().catch((error) => {
-    return error;
-  });
-
-  // const res = await apiRoomReadOne({ id }).catch((err) => {
-  //   // console.error('await-catch:::', err);
-  //   return err.response;
+  // const sampleOne = await fetch('./draft/sample-One.json').catch((error) => {
+  //   return error;
   // });
+  // const res = await sampleOne.json().catch((error) => {
+  //   return error;
+  // });
+
+  const res = await apiRoomReadOne({ id }).catch((err) => {
+    // console.error('await-catch:::', err);
+    return err.response;
+  });
 
   return res;
 };
