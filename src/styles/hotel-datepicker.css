@@ -352,7 +352,8 @@
     position: relative;
   }
 
-  .datepicker__months:before {
+  /* #HACK: line */
+  /* .datepicker__months:before {
     background: #dcdcdc;
     bottom: 0;
     content: '';
@@ -361,7 +362,7 @@
     position: absolute;
     top: 0;
     width: 1px;
-  }
+  } */
 }
 
 @media (min-width: 768px) {

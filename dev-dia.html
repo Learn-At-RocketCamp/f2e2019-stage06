@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- end of Tailwind-CDN -->
+
+  <link rel="shortcut icon" href="./src/images/favicons/B_MUSEN-RAN.png"
+    type="image/x-icon">
+
+  <title>Dia | tmp</title>
+</head>
+
+<body>
+  <!--
+  This example requires Tailwind CSS v2.0+ 
+  
+  This example requires some changes to your config:
+  
+  ```
+  // tailwind.config.js
+  module.exports = {
+    // ...
+    plugins: [
+      // ...
+      require('@tailwindcss/aspect-ratio'),
+    ],
+  }
+  ```
+-->
+  <header class="flex justify-between items-end pb-8">
+    <h3 class="text-3xl">Single Room</h3>
+    <small class="">1 人・ 單人床・ 附早餐・衛浴 1 間・18 平方公尺</small>
+    <button type="button" class="js-toggle">open</button>
+  </header>
+
+  <!-- Modal-dialog -->
+  <div class="js-modal relative z-10 hidden" role="dialog" aria-modal="true">
+    <!--
+    Background backdrop, show/hide based on modal state.
+  -->
+    <div
+      class="hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity md:block">
+    </div>
+
+    <div class="fixed z-10 inset-0 overflow-y-auto">
+      <div class="flex min-h-screen text-center md:block md:px-2 lg:px-4"
+        style="font-size: 0">
+        <!-- 
+          This element is to trick the browser into centering the modal contents. 
+        -->
+        <span class="hidden md:inline-block md:align-middle md:h-screen"
+          aria-hidden="true">&#8203;</span>
+
+        <!--
+          #NOTE: 
+          Modal panel, show/hide based on modal state.
+      -->
+        <div
+          class="w-full flex text-base text-left transform transition 
+            md:inline-block md:max-w-2xl md:px-4 md:my-8 md:align-middle lg:max-w-4xl">
+          <div
+            class="w-full relative flex items-center bg-white px-4 pt-14 pb-8 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8">
+
+            <button type="button"
+              class="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-8 lg:right-8">
+
+              <span class="sr-only">Close</span>
+              <!-- Heroicon name: outline/x -->
+              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <!-- #NOTE: Modal-Body -->
+            <div class="w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start bg-sky-50
+                sm:grid-cols-12 lg:gap-x-8">
+
+              <p>Single</p>
+            </div>
+            <!-- end of Modal-Body -->
+
+          </div>
+        </div>
+      </div>
+      <!-- end of Modal-Panel -->
+    </div>
+  </div>
+  <!-- end of Modal-dialog -->
+  <!-- end of DOM -->
+
+  <!-- end of CDN -->
+  <script>
+
+    const modal = document.querySelector('.js-modal')
+    modal.addEventListener('click', ({ target }) => {
+      if (target !== target.closest('svg')) {
+        return console.log('!');
+      }
+      console.log(target);
+      // console.dir(modal);
+      modal.style.display = 'none';
+
+    }, 'false')
+
+    const modalToggle = document.querySelector('.js-toggle')
+    modalToggle.addEventListener('click', ({ target }) => {
+      console.log(target);
+      if (target !== modalToggle) {
+        return console.log('!');
+      }
+      console.log(target);
+      modal.style.display = 'flex';
+
+    }, 'false')
+
+  </script>
+
+</body>
+
+</html>
