@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- end of Tailwind-CDN -->
+  <link rel="stylesheet"
+    href="https://unpkg.com/flowbite@1.4.3/dist/flowbite.min.css" />
+
+  <link rel="shortcut icon" href="./src/images/favicons/B_MUSEN-RAN.png"
+    type="image/x-icon">
+
+  <title>Dia | tmp</title>
+</head>
+
+<body class="overflow-hidden">
+  <!-- 
+    bg-slate-800
+    -->
+  <div class="container-xl min-h-screen mx-auto  
+              relative flex justify-between items-center
+              py-12 px-16 text-white 
+  ">
+
+    <div class="absolute top-0 left-0 w-full h-full">
+      <!-- <div class="relative"> -->
+      <!-- Carousel wrapper -->
+      <!-- 	<div class="overflow-hidden relative h-56 rounded-lg sm:h-64 xl:h-80 2xl:h-96"> -->
+      <div class="overflow-hidden relative min-h-screen  brightness-50">
+
+        <!-- Item 1 -->
+        <div id="carousel-item-1" class="hidden duration-700 ease-in-out">
+
+          <img src="./src/images/img-home/background-1-row.jpeg"
+            class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 object-cover object-center"
+            alt="House photo">
+        </div>
+
+        <!-- Item 2 -->
+        <div id="carousel-item-2" class="hidden duration-700 ease-in-out">
+          <img src="./src/images/img-home/background-2-row.jpeg"
+            class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
+            alt="House photo">
+        </div>
+        <!-- Item 3 -->
+        <div id="carousel-item-3" class="hidden duration-700 ease-in-out">
+          <img src="./src/images/img-home/background-3-square.jpeg"
+            class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
+            alt="House photo">
+        </div>
+        <!-- Item 4 -->
+        <div id="carousel-item-4" class="hidden duration-700 ease-in-out">
+          <img src="./src/images/img-home/background-4-col.jpeg"
+            class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2"
+            alt="House photo">
+        </div>
+      </div>
+      <!-- Slider indicators -->
+      <div class="flex absolute bottom-5 left-32 z-30 space-x-3">
+
+        <button id="carousel-indicator-1" type="button"
+          class="w-3 h-3 rounded-full" aria-current="true"
+          aria-label="Slide 1"></button>
+
+        <button id="carousel-indicator-2" type="button"
+          class="w-3 h-3 rounded-full" aria-current="false"
+          aria-label="Slide 2"></button>
+        <button id="carousel-indicator-3" type="button"
+          class="w-3 h-3 rounded-full" aria-current="false"
+          aria-label="Slide 3"></button>
+        <button id="carousel-indicator-4" type="button"
+          class="w-3 h-3 rounded-full" aria-current="false"
+          aria-label="Slide 4"></button>
+      </div>
+    </div>
+
+
+
+
+  </div>
+  <!-- end of container-DOM -->
+
+
+
+
+
+
+  <!-- Modal-dialog -->
+  <div class="js-modal relative z-10 hidden" role="dialog" aria-modal="true">
+    <!--
+    Background backdrop, show/hide based on modal state.
+  -->
+    <div
+      class="hidden fixed inset-0  bg-opacity-75 transition-opacity md:block">
+    </div>
+
+    <div class="fixed z-10 inset-0 overflow-y-auto">
+      <!-- 
+        lightbox bg
+        bg-sky-50 
+      -->
+      <div class="flex min-h-screen  
+        text-center 
+        md:block md:px-2 lg:px-4" style="font-size: 0">
+        <!-- 
+          This element is to trick the browser into centering the modal contents. 
+        -->
+        <span class="hidden md:inline-block md:align-middle md:h-screen"
+          aria-hidden="true">&#8203;</span>
+
+        <!--
+          #NOTE: 
+          Modal panel, show/hide based on modal state.
+      -->
+        <div
+          class="w-full 
+            flex text-base text-left transform transition 
+            md:inline-block md:max-w-2xl md:px-4 md:my-8 md:align-middle lg:max-w-4xl">
+          <div
+            class="w-full relative flex items-center px-4 pt-14 pb-8 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8 ">
+
+            <button type="button"
+              class="absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-8 lg:right-8">
+
+              <span class="sr-only">Close</span>
+              <!-- Heroicon name: outline/x -->
+              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg"
+                fill="none" viewBox="0 0 24 24" stroke-width="2"
+                stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            <!-- #NOTE: Modal-Body -->
+            <div class="w-full 
+                grid grid-cols-1 gap-y-8 gap-x-6 items-start bg-sky-50
+                sm:grid-cols-12 lg:gap-x-8">
+
+              <p>Single</p>
+            </div>
+            <!-- end of Modal-Body -->
+
+          </div>
+        </div>
+      </div>
+      <!-- end of Modal-Panel -->
+    </div>
+  </div>
+  <!-- end of Modal-dialog -->
+  <!-- end of DOM -->
+
+  <script src="https://unpkg.com/flowbite@1.4.3/dist/flowbite.js"></script>
+  <!-- end of CDN -->
+
+  <script>
+    const items = [
+      {
+        position: 0,
+        el: document.getElementById("carousel-item-1")
+      },
+      {
+        position: 1,
+        el: document.getElementById("carousel-item-2")
+      },
+      {
+        position: 2,
+        el: document.getElementById("carousel-item-3")
+      },
+      {
+        position: 3,
+        el: document.getElementById("carousel-item-4")
+      }
+    ];
+
+    const options = {
+      activeItemPosition: 1,
+      interval: 3000,
+
+      indicators: {
+        activeClasses: "bg-white dark:bg-gray-800",
+        inactiveClasses:
+          "bg-white/50 dark:bg-gray-800/50 hover:bg-white dark:hover:bg-gray-800",
+        items: [
+          {
+            position: 0,
+            el: document.getElementById("carousel-indicator-1")
+          },
+          {
+            position: 1,
+            el: document.getElementById("carousel-indicator-2")
+          },
+          {
+            position: 2,
+            el: document.getElementById("carousel-indicator-3")
+          },
+          {
+            position: 3,
+            el: document.getElementById("carousel-indicator-4")
+          }
+        ]
+      },
+
+      // callback functions
+      onNext: () => {
+        console.log("next slider item is shown");
+      },
+      onPrev: () => {
+        console.log("previous slider item is shown");
+      },
+      onChange: () => {
+        console.log("new slider item has been shown");
+      }
+    };
+
+    const carousel = new Carousel(items, options);
+  // carousel.cycle();
+  // carousel.pause()
+
+  </script>
+
+
+  <script>
+    const modal = document.querySelector('.js-modal')
+
+    const toggleModal = (element) => {
+      console.log('display-Before:::', element.style.display);
+      const isClose = element.style.display === 'none';
+      element.style.display = isClose ? 'flex' : 'none';
+      console.log('display-After:::', element.style.display);
+    }
+
+    modal.addEventListener('click', ({ target }) => {
+      const isClosest = target.closest('svg') || target.closest('path')
+      if (!isClosest) {
+        return console.log('!::', target);
+      }
+
+      toggleModal(modal);
+    }, 'false')
+
+    const modalToggle = document.querySelector('.js-toggle')
+    modalToggle.addEventListener('click', ({ target }) => {
+      if (target !== modalToggle) {
+        return console.log('!!::', target);
+      }
+
+      toggleModal(modal);
+    }, 'false')
+
+  </script>
+
+</body>
+
+</html>

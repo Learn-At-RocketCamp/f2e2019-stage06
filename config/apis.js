@@ -62,6 +62,11 @@
 // const BASE_URL = process.env.BASE_URL;
 // const TOKEN = `Bearer ${process.env.F2E_TOKEN}`;
 
+const BASE_URL = 'https://challenge.thef2e.com/api/thef2e2019/stage6';
+const F2E_TOKEN =
+  'gTHEd8A2WY0WEUN8x5K7B26trCSNbhD13QeL5MxiIq5EfErYgC2LUsWFZ4s7';
+const TOKEN = `Bearer ${F2E_TOKEN}`;
+
 const roomsReq = axios.create({
   baseURL: `${BASE_URL}/rooms`,
   headers: {

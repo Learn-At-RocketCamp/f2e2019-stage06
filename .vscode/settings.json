@@ -37,4 +37,5 @@
             //other styling properties goes here ... 
         }
     ],
+    "rpc.enabled": false,
 }

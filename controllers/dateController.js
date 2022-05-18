@@ -1,21 +1,8 @@
 import fecha from '../lib/fecha-4.2.1/lib/fecha.js';
 import HotelDatepicker from '../lib/hotel-datepicker-4.0.3/src/js/hotel-datepicker.js';
 
-import { printForm } from '../draft/devView.js';
-
-// Custom formats
-// console.log(fecha.format(new Date(2015, 10, 20), 'd'));
-// console.log(fecha.format(new Date(2015, 10, 20), 'isoDate'));
-// console.log(fecha.format(new Date(2015, 10, 20), 'dddd MMMM Do, YYYY'));
-
-const roomFillsDate = [
-  '2022-05-09',
-  '2022-05-05',
-  '2022-05-08',
-  '2022-05-10',
-  '2022-05-13',
-  '2022-05-23',
-];
+import { turnSelectedToArray } from './priceController.js';
+import { printForm, printPriceMsg } from '../draft/devView.js';
 
 // #XXX: addDaysToDate(date, days)
 const today = new Date();
@@ -33,78 +20,15 @@ const after90Days = new Date();
 after90Days.setDate(today.getDate() + 90);
 console.log(after90Days);
 
-const addDaysToDate = (date, days) => {
-  const res = new Date(date);
-  res.setDate(res.getDate() + days);
-  // #TODO: format
-  return res.toISOString();
-};
+export const rangePicker = (
+  input,
+  { normalDayPrice, holidayPrice, roomFillDates }
+) => {
+  // const input = document.querySelector('#input-id');
 
-const turnSelectedToArray = (pickString, nights) => {
-  console.log('value:::', pickString);
-  console.log('nights:::', nights);
-
-  // const regexDate = /^\d{4}-\d{2}-\d{2}/
-  // const regexDate = /^(?<pickedStart>\d{4}-\d{2}-\d{2})(?<to>.-.)(?<pickedEnd>\d{4}-\d{2}-\d{2})$/
-  // console.log(pickString.match(regexDate));
-
-  /**
-   * #REVIEW: eslint-plugin-regexp
-   * use `/u`
-   * use `exec` => to instead of `match`
-   */
-  const regexDate =
-    /^(?<pickedStart>\d{4}-\d{2}-\d{2})(?<to>.-.)(?<pickedEnd>\d{4}-\d{2}-\d{2})$/u;
-  // console.log(pickString.match(regexDate));
-  // console.log(regexDate.exec(pickString));
-
-  // #TODO: if(!pickString) return
-  const { groups: regGroups } = regexDate.exec(pickString);
-
-  const { pickedStart, pickedEnd } = regGroups;
-  // console.log(pickedStart);
-
-  console.log('----------');
-
-  // const pickedStartDate = new Date(pickedStart);
-  // pickedStartDate.setDate(pickedStartDate.getDate() + nights);
-  // console.log(pickedStartDate);
-  // console.log(fecha.format(pickedStartDate, 'YYYY-MM-DD'));
-
-  const pickedNights = [];
-  const tmpDate = new Date(pickedStart);
-  // console.log(addDaysToDate(tmpDate, 1));
-
-  for (let i = 0; i < nights; i++) {
-    // console.log(i);
-
-    const tmpNight = new Date(addDaysToDate(tmpDate, i));
-
-    const tmpNightFormat = fecha.format(tmpNight, 'isoDate');
-    const tmpNightNumber = fecha.format(tmpNight, 'd');
-    const tmpNightEng = fecha.format(tmpNight, 'ddd');
-
-    let isWeekend = true;
-
-    if (tmpNightNumber > 0 && tmpNightNumber < 5) {
-      isWeekend = false;
-    }
-    // console.log(isWeekend);
-
-    pickedNights.push({
-      date: tmpNightFormat,
-      dayNumber: tmpNightNumber,
-      dayEng: tmpNightEng,
-      isWeekend: isWeekend,
-    });
-  }
-  console.table(pickedNights);
-
-  return { pickedNights, pickedStart, pickedEnd };
-};
-
-export const rangePicker = ({ normalDayPrice, holidayPrice }) => {
-  const input = document.querySelector('#input-id');
+  const btnBooking = document.querySelector('.js-toggle');
+  // const btnBooking = document.querySelector('#js-btn-booking');
+  // console.dir(btnBooking);
 
   /**
    * #NOTE: golden-rule of value
@@ -133,27 +57,37 @@ export const rangePicker = ({ normalDayPrice, holidayPrice }) => {
     },
     onSelectRange: function () {
       console.log('Date rage selected!!!');
+      // #NOTE: if is NULL
+      btnBooking.dataset.pickedNights = datepicker.getNights();
+      btnBooking.dataset.pickedValue = datepicker.getValue();
+      console.log('btn-picked:::', btnBooking.dataset.pickedNights);
+      console.log(btnBooking.dataset.pickedValue);
+
       // #NOTE:
       const pickedData = turnSelectedToArray(
         datepicker.getValue(),
         datepicker.getNights()
       );
+
       console.log(pickedData);
-      const { pickedNights } = pickedData;
-      const weekendNights = pickedNights.filter((item) => item.isWeekend);
-      console.log(weekendNights.length);
-      const normalNight = datepicker.getNights() - weekendNights.length;
-      const sumHoliday = Number(holidayPrice) * weekendNights.length;
-      const sumNormal = Number(normalDayPrice) * normalNight;
+      // console.table(pickedData);
+      const { pickedInfo } = pickedData;
+      const { weekendNights, normalNights, checkIn, checkOut } = pickedInfo;
+      btnBooking.dataset.pickedStart = checkIn;
+      btnBooking.dataset.pickedEnd = checkOut;
+
+      const sumHoliday = Number(holidayPrice) * weekendNights;
+      const sumNormal = Number(normalDayPrice) * normalNights;
       console.log('holidayPrice:::', holidayPrice);
       console.log('normalDayPrice:::', normalDayPrice);
+
       const payment = Number(sumHoliday + sumNormal);
       console.log(payment);
-      document.querySelector('#payment').innerHTML = `帳單：${payment}`;
+      printPriceMsg(payment);
     },
     startDate: `${fecha.format(tomorrow, 'YYYY-MM-DD')}`,
     endDate: `${fecha.format(after90Days, 'YYYY-MM-DD')}`,
-    disabledDates: roomFillsDate,
+    disabledDates: roomFillDates,
 
     autoClose: false,
     preventContainerClose: true,
@@ -168,38 +102,45 @@ export const rangePicker = ({ normalDayPrice, holidayPrice }) => {
   console.log(datepicker.getDatePicker());
   // datepicker.clear()
 
-  const btnBooking = document.querySelector('#js-btn-booking');
+  // btnBooking.addEventListener(
+  //   'click',
+  //   () => {
+  //     console.log('Go to Form!!!');
+  //     const pickedData = turnSelectedToArray(
+  //       datepicker.getValue(),
+  //       datepicker.getNights()
+  //     );
+  //     console.log(pickedData);
 
-  btnBooking.addEventListener(
-    'click',
-    () => {
-      console.log('Go to Form!!!');
-      datepicker.close();
-    },
-    'false'
-  );
+  //     datepicker.close();
+  //   },
+  //   'false'
+  // );
 
-  input.addEventListener(
-    'afterClose',
-    () => {
-      console.log('Closed!');
-      console.log('date-start?:::', datepicker.start);
+  // input.addEventListener(
+  //   'afterClose',
+  //   () => {
+  //     console.log('Closed!');
+  //     console.log('date-start?:::', datepicker.start);
 
-      const id = btnBooking.dataset.id;
-      console.log('id:::', id);
+  //     const id = btnBooking.dataset.id;
+  //     console.log('id:::', id);
 
-      const pickedData = turnSelectedToArray(
-        datepicker.getValue(),
-        datepicker.getNights()
-      );
+  //     const pickedData = turnSelectedToArray(
+  //       datepicker.getValue(),
+  //       datepicker.getNights()
+  //     );
 
-      // console.log('pickedData:::', pickedData);
+  //     // console.log('pickedData:::', pickedData);
 
-      printForm({ id, pickedData, datepicker });
-    },
-    false
-  );
+  //     // printForm({ id, pickedData, datepicker });
+  //     return { id, pickedData, datepicker };
+  //   },
+  //   false
+  // );
 
   // console.log(input.value);
   // console.log(datepicker);
+
+  // return pickedData;
 };
