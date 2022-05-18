@@ -60,7 +60,9 @@ const goToggleForm = ({ target }) => {
       };
       // postRoom({ id, data });
       postRoom({ id, data }).then((result) => {
-        console.log(result);
+        const { statusText } = result;
+
+        document.querySelector('.js-modal').innerHTML = statusText;
       });
     },
     'false'

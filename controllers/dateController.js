@@ -1,5 +1,7 @@
-import fecha from '../lib/fecha-4.2.1/lib/fecha.js';
-import HotelDatepicker from '../lib/hotel-datepicker-4.0.3/src/js/hotel-datepicker.js';
+import fecha from '../lib/fecha.js';
+import HotelDatepicker from '../lib/hotel-datepicker.js';
+// import fecha from '../lib/fecha-4.2.1/lib/fecha.js';
+// import HotelDatepicker from '../lib/hotel-datepicker-4.0.3/src/js/hotel-datepicker.js';
 
 import { turnSelectedToArray } from './priceController.js';
 import { printForm, printPriceMsg } from '../draft/devView.js';
